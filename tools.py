@@ -1,3 +1,7 @@
+# Changing keras learning rate
+lr = K.get_value(model.optimizer.lr)
+newLr = f(lr)
+K.set_value(model.optimizer.lr, newLr)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 # PFA, prob false alert for binary classifier
