@@ -1,3 +1,8 @@
+# Tensorflow list of devices (good to see if it can see the gpu) though i prefer nvidia-smi
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Changing keras learning rate
 lr = K.get_value(model.optimizer.lr)
 newLr = f(lr)
