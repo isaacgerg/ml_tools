@@ -29,3 +29,30 @@ for t in range(numUnique):
     ptaCurve[t] = metrics.binary_PTA(y_true, y_pred, threshold=thresholds[t])
 
 auc = np.trapz(ptaCurve, pfaCurve)
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+def roc(y_true, y_pred):        
+    val0 = y_pred[y_true == 0]
+    val1 = y_pred[y_true == 1]
+    allSamples = np.unique(np.append(val0, val1))
+    thresholds = np.sort(allSamples)[::-1] # make descending, sort makes ascending            
+    numAll = allSamples.shape[0]
+    pta = np.zeros(numAll)
+    pfa = np.zeros(numAll)
+    for k in range(numAll):
+        pta[k] = binary_PTA(y_true, y_pred, threshold=thresholds[k])
+        pfa[k] = binary_PFA(y_true, y_pred, threshold=thresholds[k])
+    return (pfa, pta, thresholds)
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+def gpuPctCap(fraction):
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=fraction), allow_growth=False)
+    sess = tf.Session(config=tf.ConfigProto(gpu_options = gpu_options))
+    keras.backend.tensorflow_backend.set_session(sess)
+    return
+
+ionice
+import psutil
+p = psutil.Process()
+p.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+p.ionice(1)
